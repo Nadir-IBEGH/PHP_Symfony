@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use useSymfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,5 +20,5 @@ class TestController
        // $age=$request->attributes->get('age');
         return  new Response("vous avez $age ans");
     }
-
 }
+

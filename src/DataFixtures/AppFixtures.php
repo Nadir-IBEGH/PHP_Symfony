@@ -30,6 +30,9 @@ class AppFixtures extends Fixture
         // ne marche pas
         $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
 
+        // pour ajouter l'image
+        $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider($faker));
+
 
         // creer des categorées  : 3
 
@@ -44,11 +47,13 @@ class AppFixtures extends Fixture
                 $product->setName($faker->productName)
                     ->setPrice($faker->price(4000, 20000))
                     ->setSlug(strtolower($this->slogger->slug($product->getName())))
-                    ->setCategory($category);
+                    ->setCategory($category)
+                    ->setShortDescription($faker->paragraph)
+                    ->setMainPicture($faker->imageUrl(400,400, true));
                 $manager->persist($product);
             }
             $manager->flush();
         }
     }
-     // resume : creer 3 category aleatoire et pour chaque category cerer entre 15 et 20 produits
+    // resume : creer 3 category aleatoire et pour chaque category cerer entre 15 et 20 produits
 }

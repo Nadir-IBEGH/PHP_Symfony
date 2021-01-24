@@ -18,13 +18,9 @@ class HomeController extends AbstractController
      * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function homepage( EntityManagerInterface $em){
-
-        $repository = $em->getRepository(Product::class);
-        $product = $repository->find(1);
-        $product->setPrice(5000);
-        $em->flush();
-        return $this->render('home.html.twig');
+    public function homepage(ProductRepository $productRepository){
+        $products = $productRepository->findBy([],[],3);
+        return $this->render('home.html.twig',['products'=>$products]);
     }
 }
 

@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}
+    categorie : {{ product.name }}
+{% endblock %}
+
+{% block body %}
+
+    <h1> {{ product.name }} ({{ product.price/100 }} &euro;)</h1>
+
+    <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <img src="{{ product.mainPicture }}" class="img-fluid" alt="Image du produit">
+                </div>
+            </div>
+
+            <div class="col-7">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="badge badge-info">
+                                {{ product.category.name }}
+                            </span>
+                        <p class="card-text">{{ product.shortDescription }}</p>
+                        <a href="#" class="btn btn-success btn-lg">Ajouter</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}

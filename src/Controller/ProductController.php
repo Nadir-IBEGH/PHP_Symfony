@@ -69,8 +69,32 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("admin/product/{id}/edit")
+     * @param $id
+     * @param ProductRepository $productRepository
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em)
+    {
+        $product = $productRepository->find($id);
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $em->flush();
+            return $this->redirectToRoute('product_show',
+                [
+                    'category_slug' => $product->getCategory()->getSlug(),
+                    'product_slug' => $product->getSlug()]);
+        }
+        $formView = $form->createView();
+        return $this->render('product/edit.html.twig', ['product' => $product, 'formView' => $formView]);
+    }
+
+
+    /**
      * @Route("/admin/product/create", name="product_create")
-     * @param FormFactoryInterface $factory
      * @param Request $request
      * @param SluggerInterface $slugger
      * @param EntityManagerInterface $em
@@ -87,7 +111,12 @@ class ProductController extends AbstractController
 
             $em->persist($product);
             $em->flush();
-          //  dd($product);
+            return $this->redirectToRoute('product_show',
+                [
+                    'product_slug' => $product->getSlug(),
+                    'category_slug' => $product->getCategory()->getSlug()
+                ]);
+            //  dd($product);
         }
         $formView = $form->createView();
 

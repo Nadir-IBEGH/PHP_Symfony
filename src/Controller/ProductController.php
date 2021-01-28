@@ -76,30 +76,18 @@ class ProductController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function create(FormFactoryInterface $factory, Request $request, SluggerInterface $slugger, EntityManagerInterface $em)
+    public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $em)
     {
-        // les aramètres pour dire qu'on récurérer une entité Product depuis le form
-        $builder = $factory->createBuilder(ProductType::class);
-
-
-        // si on veut affichier les categories en majuscule :
-        /*
-         *  'choice_label' => function (Category $category){
-         * }return strtoupper($category->getName());
-        */
-
-        // $form est une classe énorme
-        $form = $builder->getForm();
+        $form = $this->createForm(ProductType::class);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if ($form->isSubmitted()) {
             $product = $form->getData();
             $product->setSlug(strtolower($slugger->slug($product->getName())));
 
             $em->persist($product);
             $em->flush();
-
-        //    dd($product);
+          //  dd($product);
         }
         $formView = $form->createView();
 

@@ -2,27 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
-use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\ResolvedFormTypeFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
@@ -39,7 +27,7 @@ class ProductController extends AbstractController
         );
         if (!$category) {
             throw  $this->createNotFoundException("La categorie demandé n'existe pas");
-        };
+        }
 
         return $this->render('product/category.html.twig', [
             'category' => $category
@@ -50,7 +38,6 @@ class ProductController extends AbstractController
      * @Route("/{category_slug}/{product_slug}",  name="product_show" )
      * @param $product_slug
      * @param ProductRepository $productRepository
-     * @param UrlGeneratorInterface $urlGenerator
      * @return Response
      */
 
@@ -62,7 +49,7 @@ class ProductController extends AbstractController
 
         if (!$product) {
             throw  $this->createNotFoundException("Le produit demandé n'existe pas");
-        };
+        }
 
         return $this->render('product/show.html.twig', [
             'product' => $product]);

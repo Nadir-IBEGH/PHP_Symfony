@@ -15,8 +15,7 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/", name="homepage")
-     * @param EntityManagerInterface $em
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param ProductRepository $productRepository
      */
     public function homepage(ProductRepository $productRepository){
         $products = $productRepository->findBy([],[],3);

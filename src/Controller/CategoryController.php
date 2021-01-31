@@ -43,6 +43,7 @@ class CategoryController extends AbstractController
      * @param Request $request
      * @param CategoryRepository $categoryRepository
      * @param EntityManagerInterface $em
+     * @param SluggerInterface $slugger
      * @return Response
      */
     public function edit($id, Request $request, CategoryRepository $categoryRepository, EntityManagerInterface $em, SluggerInterface $slugger)

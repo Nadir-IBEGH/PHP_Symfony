@@ -4,22 +4,28 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
     protected $slogger;
+    protected $encoder;
 
     /**
      * AppFixtures constructor.
      * @param SluggerInterface $slogger
+     * +
+     * @param UserPasswordEncoderInterface $encoder
      */
-    public function __construct(SluggerInterface $slogger)
+    public function __construct(SluggerInterface $slogger, UserPasswordEncoderInterface $encoder)
     {
         $this->slogger = $slogger;
+        $this->encoder = $encoder;
     }
 
     public function load(ObjectManager $manager)
@@ -33,6 +39,22 @@ class AppFixtures extends Fixture
         // pour ajouter l'image
         $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider($faker));
 
+        $admin = new User();
+        $hash = $this->encoder->encodePassword($admin, 'password');
+        $admin->setEmail('admin@gmail.com')
+            ->setFullName('Admin')
+            ->setPassword($hash)
+            ->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
+
+        for ($u = 0; $u < 5; $u++) {
+            $user = new User();
+            $hash = $this->encoder->encodePassword($user,'password');
+            $user->setEmail("user$u@gmail.com")
+                ->setFullName($faker->name())
+                ->setPassword($hash);
+            $manager->persist($user);
+        }
 
         // creer des categorées  : 3
 
@@ -49,7 +71,7 @@ class AppFixtures extends Fixture
                     ->setSlug(strtolower($this->slogger->slug($product->getName())))
                     ->setCategory($category)
                     ->setShortDescription($faker->paragraph)
-                    ->setMainPicture($faker->imageUrl(400,400, true));
+                    ->setMainPicture($faker->imageUrl(400, 400, true));
                 $manager->persist($product);
             }
             $manager->flush();

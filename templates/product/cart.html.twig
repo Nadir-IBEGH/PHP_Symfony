@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Page de
+{% endblock %}
+
+{% block body %}
+    <h1>Liste des produits : </h1>
+    <table>
+        <tr>
+            <td>name</td>
+            <td>price</td>
+            <td>Qautité</td>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.price }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

@@ -28,24 +28,40 @@ class CartController extends AbstractController
         if (!$product) {
             throw $this->createNotFoundException("Erreur : le produit $id demandé n'exitste pas");
         }
-
         $cart = $session->get('cart', []);
-
         if (array_key_exists($id, $cart)) {
             $cart[$id]++;
         } else {
             $cart[$id] = 1;
         }
-
         $session->set('cart', $cart);
-
-        /** @var  FlashBag  $flashBag **/
-        $flashBag = $session->getBag('flashes');
-        $flashBag->add('success',"Le produit a bien été ajouté au panier.");
+        $this->addFlash('success', "Le produit a bien été ajouté au panier.");
 
         return $this->redirectToRoute('product_show', [
             'category_slug' => $product->getCategory()->getSlug(),
             'product_slug' => $product->getSlug()]);
+    }
 
+    /**
+     * @Route("/cart", name="cart_show")
+     * @param ProductRepository $productRepository
+     * @param SessionInterface $session
+     */
+    public function show(ProductRepository $productRepository, SessionInterface $session)
+    {
+        $detailedCart = [];
+        $total = 0;
+
+        foreach ($session->get('cart', []) as $id => $qty) {
+            $product = $productRepository->find($id);
+            $detailedCart [] = [
+                'product' => $product,
+                'qty' => $qty
+            ];
+            $total += $qty * $product->getPrice();
+        }
+        return $this->render('cart/index.html.twig',
+            ['items' => $detailedCart,
+                'total' => $total]);
     }
 }

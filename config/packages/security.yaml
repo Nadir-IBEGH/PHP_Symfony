@@ -20,11 +20,11 @@ security:
         #      guard:
         #        authenticators:
         #          - App\Security\LoginFormAuthentificatorAuthenticator
-        form_login:
-          login_path: authentification_login
-          check_path: authentification_login
-          username_parameter: login[email]
-          password_parameter: login[password]
+      form_login:
+        login_path: authentification_login
+        check_path: authentification_login
+        username_parameter: login[email]
+        password_parameter: login[password]
       logout:
         path: authentification_logout
 

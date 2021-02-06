@@ -8,24 +8,53 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class CartService
 {
 
+    /** @var SessionInterface */
     protected $session;
+
+    /** @var ProductRepository */
     protected $productRepository;
 
+    /**
+     * CartService constructor.
+     * @param SessionInterface $session
+     * @param ProductRepository $productRepository
+     */
     public function __construct(SessionInterface $session, ProductRepository $productRepository)
     {
         $this->session = $session;
         $this->productRepository = $productRepository;
     }
 
+
+    /**
+     * @return array
+     */
+    public function getCart(): array
+    {
+        return $this->session->get('cart', []);
+    }
+
+    /**
+     * @param array $cart
+     */
+    public function saveCart(array $cart): void
+    {
+        $this->session->set('cart', $cart);
+    }
+
+
+    /**
+     * @param int $id
+     */
     public function addProduct(int $id)
     {
-        $cart = $this->session->get('cart', []);
-        if (array_key_exists($id, $cart)) {
-            $cart[$id]++;
-        } else {
-            $cart[$id] = 1;
+        $cart = $this->getCart();
+
+        if (!array_key_exists($id, $cart)) {
+            $cart[$id] = 0;
         }
-        $this->session->set('cart', $cart);
+        $cart[$id]++;
+        $this->saveCart($cart);
     }
 
     /**
@@ -34,7 +63,7 @@ class CartService
     public function getDetailedCartItems(): array
     {
         $detailedCart = [];
-        foreach ($this->session->get('cart', []) as $id => $qty) {
+        foreach ($this->getCart() as $id => $qty) {
             $product = $this->productRepository->find($id);
             if (!$product) {
                 continue;
@@ -51,7 +80,7 @@ class CartService
     public function getTotal(): int
     {
         $total = 0;
-        foreach ($this->session->get('cart', []) as $id => $qty) {
+        foreach ($this->getCart() as $id => $qty) {
             $product = $this->productRepository->find($id);
             if (!$product) {
                 continue;
@@ -61,27 +90,35 @@ class CartService
         return $total;
     }
 
-    public function removeProduct($id){
-        $cart = $this->session->get('cart', []);
+    /**
+     * @param $id
+     */
+    public function removeProduct($id)
+    {
+        $cart = $this->getCart();
         unset($cart[$id]);
-        $this->session->set('cart',$cart);
+        $this->saveCart($cart);
     }
 
-    public function decrement(int $id){
-        $cart = $this->session->get('cart',[]);
+    /**
+     * @param int $id
+     */
+    public function decrement(int $id)
+    {
+        $cart = $this->getCart();
 
-        if(!array_key_exists($id, $cart)){
+        if (!array_key_exists($id, $cart)) {
             return;
         }
 
-        if($cart[$id] ===1){
+        if ($cart[$id] === 1) {
             $this->removeProduct($id);
             return;
         }
 
-            $cart[$id]--;
+        $cart[$id]--;
 
-            $this->session->set('cart',$cart);
+        $this->saveCart($cart);
     }
 
 }

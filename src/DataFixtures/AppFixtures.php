@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Purchase;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -47,12 +48,14 @@ class AppFixtures extends Fixture
             ->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin);
 
+        $users = [];
         for ($u = 0; $u < 5; $u++) {
             $user = new User();
-            $hash = $this->encoder->encodePassword($user,'password');
+            $hash = $this->encoder->encodePassword($user, 'password');
             $user->setEmail("user$u@gmail.com")
                 ->setFullName($faker->name())
                 ->setPassword($hash);
+            $users [] = $user;
             $manager->persist($user);
         }
 
@@ -74,8 +77,23 @@ class AppFixtures extends Fixture
                     ->setMainPicture($faker->imageUrl(400, 400, true));
                 $manager->persist($product);
             }
-            $manager->flush();
+
+            for ($o = 0; $o< mt_rand(20, 40); $o++) {
+                $purchase = new Purchase();
+                $purchase->setFullName($faker->name)
+                    ->setCity($faker->city)
+                    ->setPostalCode($faker->postcode)
+                    ->setAddress($faker->streetAddress)
+                    ->setUser($faker->randomElement($users))
+                    ->setTotal(mt_rand(2000, 30000));
+
+                if ($faker->boolean(90)) {
+                    $purchase->setStatus(Purchase::STATUS_PEND);
+                }
+                $manager->persist($purchase);
+            }
         }
+
+        $manager->flush();
     }
-    // resume : creer 3 category aleatoire et pour chaque category cerer entre 15 et 20 produits
 }

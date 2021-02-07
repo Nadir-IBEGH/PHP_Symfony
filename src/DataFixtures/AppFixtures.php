@@ -61,6 +61,7 @@ class AppFixtures extends Fixture
 
         // creer des categorées  : 3
 
+        $products = [];
         for ($c = 0; $c < 3; $c++) {
             $category = new Category;
             $category->setName($faker->department)  // ca donne une category
@@ -75,17 +76,25 @@ class AppFixtures extends Fixture
                     ->setCategory($category)
                     ->setShortDescription($faker->paragraph)
                     ->setMainPicture($faker->imageUrl(400, 400, true));
+                $products[] =$product;
                 $manager->persist($product);
             }
 
-            for ($o = 0; $o< mt_rand(20, 40); $o++) {
+            for ($o = 0; $o < mt_rand(20, 40); $o++) {
                 $purchase = new Purchase();
                 $purchase->setFullName($faker->name)
                     ->setCity($faker->city)
                     ->setPostalCode($faker->postcode)
                     ->setAddress($faker->streetAddress)
                     ->setUser($faker->randomElement($users))
-                    ->setTotal(mt_rand(2000, 30000));
+                    ->setTotal(mt_rand(2000, 30000))
+                    ->setPurchasedAt($faker->dateTimeBetween('-6 month'));
+
+                $selectedProducts = $faker->randomElements($products, mt_rand(3,5));
+
+                foreach ($selectedProducts as $product){
+                    $purchase->addProduct($product);
+                }
 
                 if ($faker->boolean(90)) {
                     $purchase->setStatus(Purchase::STATUS_PEND);

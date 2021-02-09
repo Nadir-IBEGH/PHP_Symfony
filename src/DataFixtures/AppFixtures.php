@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Purchase;
+use App\Entity\PurchaseItem;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -76,7 +77,7 @@ class AppFixtures extends Fixture
                     ->setCategory($category)
                     ->setShortDescription($faker->paragraph)
                     ->setMainPicture($faker->imageUrl(400, 400, true));
-                $products[] =$product;
+                $products[] = $product;
                 $manager->persist($product);
             }
 
@@ -90,10 +91,21 @@ class AppFixtures extends Fixture
                     ->setTotal(mt_rand(2000, 30000))
                     ->setPurchasedAt($faker->dateTimeBetween('-6 month'));
 
-                $selectedProducts = $faker->randomElements($products, mt_rand(3,5));
+                $selectedProducts = $faker->randomElements($products, mt_rand(3, 5));
 
-                foreach ($selectedProducts as $product){
-                    $purchase->addProduct($product);
+                foreach ($selectedProducts as $product) {
+                    /** @var Product $product */
+                    $purchaseItem = new PurchaseItem();
+                    $purchaseItem
+                        ->setProduct($product)
+                        ->setProductName($product->getName())
+                        ->setProductPrice($product->getPrice())
+                        ->setQuantity(mt_rand(1, 5))
+                        ->setTotal($purchaseItem->getProductPrice() * $purchaseItem->getQuantity())
+                        ->setPurchase($purchase);
+
+                    $manager->persist($purchaseItem);
+
                 }
 
                 if ($faker->boolean(90)) {

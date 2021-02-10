@@ -29,15 +29,20 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Taxes\Calculator:
-      arguments:
-        $tva: 20
-
-    App\Taxes\Detector:
-      arguments:
-        $tva: 100
 
     Cocur\Sligify\Slugify: ~
+
+
+    App\Stripe\StripeService:
+      arguments:
+        $secretKey: '%env(STRIPE_SECRETE_KEY)%'
+        $publicKey: '%env(STRIPE_PUBLIC_KEY)%'
+
+
+
+
+
+
 
 
 

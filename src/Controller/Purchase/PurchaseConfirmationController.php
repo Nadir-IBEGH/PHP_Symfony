@@ -70,17 +70,4 @@ class PurchaseConfirmationController extends AbstractController {
             'id'=> $purchase->getId()
         ]);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

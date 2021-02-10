@@ -4,6 +4,7 @@ namespace App\Controller\Purchase;
 
 use App\Cart\CartService;
 use App\Entity\Purchase;
+use App\Purchase\PurchasePersister;
 use App\Entity\PurchaseItem;
 use App\Form\CartConfirmationType;
 use DateTime;
@@ -11,20 +12,32 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PurchaseConfirmationController extends AbstractController {
 
 
     protected $cartService;
     protected $entityManager;
-
-    public function __construct(CartService $cartService, EntityManagerInterface $entityManager){
-        $this->cartService = $cartService;
-        $this->entityManager = $entityManager;
-    }
+    protected $purchasePersister;
 
     /**
+     * PurchaseConfirmationController constructor.
+     * @param CartService $cartService
+     * @param EntityManagerInterface $entityManager
+     * @param PurchasePersister $purchasePersister
+     */
+    public function __construct(CartService $cartService, EntityManagerInterface $entityManager, PurchasePersister $purchasePersister){
+        $this->cartService = $cartService;
+        $this->entityManager = $entityManager;
+        $this->purchasePersister = $purchasePersister;
+    }
+/** @IsGranted("USER_ROLE", message="Vous devez être connecté pour confirmer votre commande")
+*/
+    /**
      * @Route("/purchase/confirm", name="purchase_confirm")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function confirm(Request $request){
 
@@ -47,27 +60,15 @@ class PurchaseConfirmationController extends AbstractController {
 
         /** @var Purchase $purchase */
         $purchase = $form->getData();
-        $purchase->setUser($user)
-            ->setPurchasedAt(new DateTime())
-            ->setTotal($this->cartService->getTotal());
-        $this->entityManager->persist($purchase);
+        $this->purchasePersister->storePurchase($purchase);
 
-        foreach ($this->cartService->getDetailedCartItems() as $cartItem){
-            $purchaseItem = new PurchaseItem();
-            $purchaseItem->setPurchase($purchase)
-                ->setProduct($cartItem->product)
-                ->setProductName($cartItem->product->getName())
-                ->setQuantity($cartItem->getTotal())
-                ->setTotal($cartItem->getTotal())
-                ->setProductPrice($cartItem->product->getPrice());
-        $this->entityManager->persist($purchaseItem);
-        }
+  /*      $this->cartService->empty();
 
-        $this->entityManager->flush();
-        $this->cartService->empty();
-
-        $this->addFlash('success', "La commande a bien été enregistré");
-        return $this->redirectToRoute('purchases_index');
+        $this->addFlash('success', "La commande a bien été enregistré");*/
+        return $this->redirectToRoute('purchase_payment_form',
+        [
+            'id'=> $purchase->getId()
+        ]);
     }
 
 

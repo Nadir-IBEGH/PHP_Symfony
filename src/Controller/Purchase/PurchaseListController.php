@@ -13,7 +13,7 @@ class PurchaseListController extends AbstractController
 {
 
     /**
-     * @Route("/nadir/user/purchases", name="purchases_index")
+     * @Route("/purchases", name="purchases_index")
      * @isGranted("ROLE_USER" , message="Vous devez être connecté pour accèder à vos commandes")
      * @return mixed
      */

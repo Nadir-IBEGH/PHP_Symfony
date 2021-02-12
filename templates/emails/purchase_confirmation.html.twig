@@ -16,17 +16,17 @@
         {% for item in  purchase.purchaseItems %}
             <td>{{ item.productName }} </td>
             <td>{{ item.quantity }} </td>
-            <td>{{ item.productPrice/100 }} € </td>
-            <td>{{ item.total/100 }} € </td>
+            <td>{{ item.productPrice | amount}}</td>
+            <td>{{ item.total }} € </td>
         {% endfor %}
     </tr>
     </tbody>
     <tfoot>
       <tr>
           <td colspan="3">Total :</td>
-          <td>{{ purchase.total /100 }} € </td>
+          <td>{{ purchase.total | amount}}  </td>
       </tr>
     </tfoot>
 </table>
 
-<h2>Total de la commande : {{ purchase.total/100 }} €</h2>
+<h2>Total de la commande : {{ purchase.total | amount}}</h2>

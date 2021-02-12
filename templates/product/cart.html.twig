@@ -15,7 +15,7 @@
         {% for product in products %}
             <tr>
                 <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
+                <td>{{ product.price | amount }}</td>
                 <td>{{ product.price }}</td>
             </tr>
         {% endfor %}

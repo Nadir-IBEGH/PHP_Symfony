@@ -69,10 +69,11 @@ class AppFixtures extends Fixture
             ->setSlug(strtolower($this->slogger->slug($category->getName())));
             $manager->persist($category);
 
+         //   dd($faker->price(4000, 20000));
             for ($p = 0; $p < mt_rand(15, 20); $p++) {
                 $product = new Product;
                 $product->setName($faker->productName)
-                    ->setPrice($faker->price(4000, 20000))
+                    ->setPrice($faker->price(40, 200))
                     ->setSlug(strtolower($this->slogger->slug($product->getName())))
                     ->setCategory($category)
                     ->setShortDescription($faker->paragraph)

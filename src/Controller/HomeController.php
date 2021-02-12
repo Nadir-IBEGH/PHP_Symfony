@@ -17,7 +17,6 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="homepage")
      * @param ProductRepository $productRepository
-     * @param CategoryRepository $categoryRepository
      */
     public function homepage(ProductRepository $productRepository){
         $products = $productRepository->findBy([],[],3);

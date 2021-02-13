@@ -20,12 +20,12 @@ final class Version20210207092824 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE Purchase CHANGE user_id user_id INT NOT NULL, CHANGE adress address VARCHAR(255) NOT NULL');
+  //      $this->addSql('ALTER TABLE Purchase CHANGE user_id user_id INT NOT NULL, CHANGE adress address VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE Purchase CHANGE user_id user_id INT DEFAULT NULL, CHANGE address adress VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
+    //    $this->addSql('ALTER TABLE Purchase CHANGE user_id user_id INT DEFAULT NULL, CHANGE address adress VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
     }
 }

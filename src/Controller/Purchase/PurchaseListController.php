@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PurchaseListController extends AbstractController
 {
-
     /**
      * @Route("/purchases", name="purchases_index")
      * @isGranted("ROLE_USER" , message="Vous devez être connecté pour accèder à vos commandes")

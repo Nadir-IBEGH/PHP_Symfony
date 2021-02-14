@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Event\RegisterSuccessEvent;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,13 +23,15 @@ class RegisterController extends AbstractController
      * @param UserRepository $userRepository
      * @param UserPasswordEncoderInterface $encoder
      * @param EntityManagerInterface $manager
+     * @param EventDispatcherInterface $eventDispatcher
      * @return Response
      */
     public function index(Request $request,
                           EntityManagerInterface $entityManager,
                           UserRepository $userRepository,
                           UserPasswordEncoderInterface $encoder,
-                          EntityManagerInterface $manager
+                          EntityManagerInterface $manager,
+                          EventDispatcherInterface $eventDispatcher
 
     ): Response
     {
@@ -58,6 +62,11 @@ class RegisterController extends AbstractController
 
                 $manager->persist($u);
                 $manager->flush();
+
+                $registerSuccessEvent = new RegisterSuccessEvent($u);
+                $eventDispatcher->dispatch($registerSuccessEvent ,'register.success');
+
+
                 $this->addFlash('success', 'Félicitation, vous êtes inscrit chez nous, vous pouvez désormé profiter de nos produits');
                 return $this->redirectToRoute('authentification_login');
             }

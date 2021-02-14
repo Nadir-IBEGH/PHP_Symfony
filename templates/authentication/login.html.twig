@@ -14,7 +14,7 @@
     {% endif %}
     {{ form_start(formView) }}
     {{ form_widget(formView) }}
-    <button type="submit" class="btn btn-success">Connexion</button>
+    <button type="submit" class="btn btn-success">Connexion</button> ou bien <a href="{{ path('register') }}" class="link">s'inscrire</a>
     {{ form_end(formView) }}
 {% endblock %}
 

@@ -17,6 +17,9 @@ class AuthenticationController extends AbstractController
      */
     public function login(AuthenticationUtils $utils): Response
     {
+        if($this->getUser()){
+           return  $this->redirectToRoute('account_home');
+        }
         $form = $this->createForm(LoginType::class, ['email' => $utils->getLastUsername()]);
         return $this->render('authentication/login.html.twig', [
             'formView' => $form->createView(),

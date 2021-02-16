@@ -48,7 +48,7 @@ class AccountController extends AbstractController
                 $user->setPassword($new_password_hash);
                 $entityManager->flush();
                 $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
-                return $this->redirectToRoute('account_home');
+                return $this->redirectToRoute('purchases_index');
             }
             else {
                 $this->addFlash('info', 'Votre mot de passe actuel n\'est pas bon.');

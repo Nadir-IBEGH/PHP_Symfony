@@ -79,7 +79,7 @@ class LoginFormAuthentificatorAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        return new RedirectResponse('/account');
+        return new RedirectResponse('/purchases');
     }
 
     public function start(Request $request, AuthenticationException $authException = null)

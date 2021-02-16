@@ -5,17 +5,23 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Connexion</h1>
-
-    {% if error %}
-        <div class="alert alert-danger">
-               {{ error.message }}
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <h1>Connexion</h1>
+            <hr>
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.message }}
+                </div>
+            {% endif %}
+            {{ form_start(formView) }}
+            {{ form_widget(formView) }}
+            <button type="submit" class="btn btn-success">Connexion</button>
+            ou bien <a href="{{ path('register') }}" class="link">s'inscrire</a>
+            {{ form_end(formView) }}
         </div>
-    {% endif %}
-    {{ form_start(formView) }}
-    {{ form_widget(formView) }}
-    <button type="submit" class="btn btn-success">Connexion</button> ou bien <a href="{{ path('register') }}" class="link">s'inscrire</a>
-    {{ form_end(formView) }}
+    </div>
 {% endblock %}
 
 

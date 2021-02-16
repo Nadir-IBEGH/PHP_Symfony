@@ -16,7 +16,7 @@ class AmountExtension extends AbstractExtension {
 
     public function amount($value, string $symbol = '€', string $descep=',', string $thousandsep= ' '){
         $finalValue = number_format($value,2 ,$descep, $thousandsep);
-        return $finalValue.' '.$symbol;
+        return $finalValue.''.$symbol;
     }
 
 

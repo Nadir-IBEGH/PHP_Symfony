@@ -1,0 +1,33 @@
+<style>
+    .vertical-menu {
+        width: 150px;
+    }
+
+    .vertical-menu a {
+        background-color: #eee;
+        color: black;
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+    }
+
+    .vertical-menu a:hover {
+        background-color: #ccc;
+    }
+
+    .vertical-menu a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+
+<div class="vertical-menu">
+    <a href="{{ path('purchases_index') }}" class="active">Accueil</a>
+    <a href="{{ path('purchases_index') }}" >Mes commandes</a>
+    <a href="{{ path('account_password_update') }}">Modifier mot de passe</a>
+    <a href="{{ path('cart_show') }}">Mon panier</a>
+    <a href="#">Ajouter une adresse de livraison</a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="#">Vous etes administrateur,acceder au backoffice</a>
+    {% endif %}
+</div>

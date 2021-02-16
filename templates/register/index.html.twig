@@ -5,24 +5,27 @@
 {% endblock %}
 
 {% block body %}
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <h2>Formulaire d'inscription</h2>
+            <hr>
+            {{ form_start(formView) }}
 
-    <h2>Formulaire d'inscription</h2>
-    <hr>
-    {{ form_start(formView) }}
+            {{ form_errors(formView) }}
 
-    {{ form_errors(formView) }}
+            {{ form_row(formView.fullName) }}
 
-    {{ form_row(formView.fullName) }}
+            {{ form_row(formView.email) }}
 
-    {{ form_row(formView.email) }}
+            {{ form_row(formView.password) }}
 
-    {{ form_row(formView.password) }}
-
-    <button type="submit" class="btn btn-primary">
-        <i class="fas fa-save"></i>
-        S'inscrire
-    </button>
-    ou bien<a href=" {{ path('authentification_login') }}" class="link"> se connecter</a>
-    {{ form_end(formView) }}
-
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                S'inscrire
+            </button>
+            ou bien<a href=" {{ path('authentification_login') }}" class="link"> se connecter</a>
+            {{ form_end(formView) }}
+        </div>
+    </div>
 {% endblock %}

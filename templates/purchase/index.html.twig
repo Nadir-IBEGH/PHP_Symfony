@@ -5,6 +5,9 @@
 
 {% block body %}
     <h2>Mes commandes </h2>
+
+    {% if purchases | length>0 %}
+
     <table class="table">
         <thead>
         <tr>
@@ -34,10 +37,12 @@
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="3">Total des commndes:</td>
-            <td colspan="3">{{ 30000 | amount}}</td>
+            <td colspan="4">Total des commndes:</td>
+            <td colspan="1">{{ totalCommandes | amount}}</td>
         </tr>
         </tfoot>
     </table>
-
+     {% else  %}
+         <h3>Vous n'avez pas de commande !</h3>
+    {% endif %}
 {% endblock %}

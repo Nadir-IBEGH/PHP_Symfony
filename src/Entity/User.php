@@ -213,4 +213,12 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getTotalPurchases():float{
+        $total = 0;
+        foreach ($this->getPurchases() as $purchase){
+            $total+=$purchase->getTotal();
+        }
+        return $total;
+    }
 }

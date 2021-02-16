@@ -27,8 +27,17 @@ class UserType extends AbstractType
                     'invalid_message' => 'L\'email et la confirmation doivet etre identique',
                     'label' => 'Adresse mail',
                     'required' => true,
-                    'first_options' => ['label' => 'Adresse mail'],
-                    'second_options' => ['label' => 'Confirmer votre adresse mail']
+                    'first_options' => [
+                        'label' => 'Adresse mail',
+                        'attr' =>
+                            ['placeholder' => 'Enrez votre adresse email']
+                    ],
+
+                    'second_options' => [
+                        'label' => 'Confirmer votre adresse mail',
+                        'attr' =>
+                            ['placeholder' => 'Confirmez votre adresse email']
+                    ],
                 ])
             ->add('password', RepeatedType::class,
                 [
@@ -36,8 +45,19 @@ class UserType extends AbstractType
                     'invalid_message' => 'Le mot de passe et la confirmation doivet etre identique',
                     'label' => 'Mot de passe',
                     'required' => true,
-                    'first_options' => ['label' => 'Mot de passe'],
-                    'second_options' => ['label' => 'Confirmer votre mot de passe']
+                    'first_options' => [
+                        'label' => 'Mot de passe',
+                        'attr' => [
+                            'placeholder' => 'Entrez votre mot de passe'
+                        ]
+                    ],
+
+                    'second_options' => [
+                        'label' => 'Confirmer votre mot de passe',
+                        'attr' => [
+                            'placeholder' => 'Confirmez votre mot de passe'
+                        ]
+                    ]
                 ]);
 
     }

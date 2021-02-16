@@ -55,6 +55,8 @@ class CartService
         }
         $cart[$id]++;
         $this->saveCart($cart);
+
+      //  dd($this->getCart());
     }
 
     /**
@@ -75,19 +77,22 @@ class CartService
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getTotal(): int
+    public function getTotal(): float
     {
         $total = 0;
+       //   dd($this->getCart() );
         foreach ($this->getCart() as $id => $qty) {
             $product = $this->productRepository->find($id);
             if (!$product) {
                 continue;
             }
-            $total += $product->getPrice();
+            $total += $product->getPrice() * $qty;
         }
+      //  dd($total);
         return $total;
+
     }
 
     /**

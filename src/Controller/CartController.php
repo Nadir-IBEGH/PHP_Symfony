@@ -37,10 +37,10 @@ class CartController extends AbstractController
     {
         /** @var Product $product */
         $product = $this->productRepository->find($id);
+
         if (!$product) {
             throw $this->createNotFoundException("Erreur : le produit $id demandé n'exitste pas");
         }
-
         $this->cartService->addProduct($product->getId());
         $this->addFlash('success', "Le produit a bien été ajouté au panier.");
 
@@ -63,6 +63,7 @@ class CartController extends AbstractController
         $form = $this->createForm(CartConfirmationType::class);
 
         $detailedCart = $this->cartService->getDetailedCartItems();
+
         $total = $this->cartService->getTotal();
 
         return $this->render('cart/index.html.twig',

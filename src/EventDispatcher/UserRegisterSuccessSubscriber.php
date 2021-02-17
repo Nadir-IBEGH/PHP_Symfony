@@ -3,9 +3,7 @@
 namespace App\EventDispatcher;
 
 use App\Entity\User;
-use App\Event\PurchaseSuccessEvent;
 use App\Event\RegisterSuccessEvent;
-use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;

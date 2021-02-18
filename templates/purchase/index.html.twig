@@ -5,51 +5,54 @@
 
 {% block body %}
     <div class="row">
-    <div class="col-2">
-        {% include 'account/_menu_gauche.html.twig' %}
-    </div>
-    <div class="col-8">
-    <h2>Mes commandes </h2>
+        <div class="col-2">
+            {% include 'account/_menu_gauche.html.twig' %}
+        </div>
+        <div class="col-8">
+            <h2>Mes commandes </h2>
+            <hr>
+            {% if purchases | length>0 %}
 
-    {% if purchases | length>0 %}
-
-    <table class="table">
-    <thead>
-    <tr>
-        <th>Numéro</th>
-        <th>Adresse de commande</th>
-        <th>Date de commande</th>
-        <th>Produits</th>
-        <th>Total</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for purchase in purchases %}
-    <tr>
-        <td>{{ purchase.id }}</td>
-    <td>{{ purchase.address }}<br>{{ purchase.postalCode }}<br>{{ purchase.city }} </td>
-    <td>{{ purchase.purchasedAt | date ('d:m:Y H:i') }}</td>
-    <td>
-    <ul>
-    {% for item in  purchase.purchaseItems %}
-    <li>{{ item.quantity }} x {{ item.productName }} ({{ item.ProductPrice | amount}}) </li>
-    {% endfor %}
-    </ul>
-    </td>
-    <td>{{ purchase.total | amount }} </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot>
-    <tr>
-    <td colspan="4">Total des commndes:</td>
-    <td colspan="1">{{ totalCommandes | amount}}</td>
-    </tr>
-    </tfoot>
-    </table>
-    {% else  %}
-    <h3>Vous n'avez pas de commande !</h3>
-    {% endif %}
-    </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Numéro</th>
+                        <th>Adresse de commande</th>
+                        <th>Date de commande</th>
+                        <th>Produits</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for purchase in purchases %}
+                        <tr>
+                            <td>{{ purchase.id }}</td>
+                            <td>{{ purchase.address }}<br>{{ purchase.postalCode }}<br>{{ purchase.city }} </td>
+                            <td>{{ purchase.purchasedAt | date ('d:m:Y H:i') }}</td>
+                            <td>
+                                <ul>
+                                    {% for item in  purchase.purchaseItems %}
+                                        <li>{{ item.quantity }} x {{ item.productName }}
+                                            ({{ item.ProductPrice | amount }})
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>{{ purchase.total | amount }} </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="4">Total des commndes:</td>
+                        <td colspan="1">{{ totalCommandes | amount }}</td>
+                    </tr>
+                    </tfoot>
+                </table>
+            {% else %}
+                <br>
+                <p>Vous n'avez pas de commandes pour le moment !</p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

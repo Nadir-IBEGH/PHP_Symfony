@@ -1,0 +1,47 @@
+{% extends 'admin/layout.html.twig' %}
+
+
+{% block body %}
+    <h1>Détail du produit :</h1>
+    <hr>
+    <div class="row">
+        <div class="col-9">
+            <table>
+                <tbody>
+                <tr>
+                    <td >Nom</td>
+                    <td >{{ product.name }}</td>
+                </tr>
+                <tr>
+                    <td >Catégorie</td>
+                    <td colspan="5">{{ product.category.name }}</td>
+                </tr>
+                <tr>
+                    <td >Prix</td>
+                    <td >{{ product.price | amount }}</td>
+                </tr>
+                <tr>
+                    <td >Image</td>
+                    <td ><img class="img-fluid" src="{{ product.mainPicture }}" class="img-fluid"
+                                         alt="Image du produit" width="100"></td>
+                </tr>
+                <tr>
+                    <td >Description</td>
+                    <td >{{ product.shortDescription }}</td>
+                </tr>
+                <p></p>
+                </tbody>
+
+            </table>
+            <br>
+            <a href="{{ path('admin_index') }}">Retourner à la page d'accueil </a>
+        </div>
+        <div class="col-3">
+            <div>
+                <a href="{{ path('admin_product_edit', {'id': product.id}) }}" class="btn btn-lg btn-info">
+                    <i class="fa fa-edit" aria-hidden="true"></i> Modifier
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

@@ -20,7 +20,7 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $this->addFlash('info','Merci de nous avoir contacté, notre équipe va vous répondre dans les meilleurs délais.');
+            $this->addFlash('success','Merci de nous avoir contacté, notre équipe va vous répondre dans les meilleurs délais.');
            // envoyer les données mail/base de données
 
             // vider le formulaire en cas de succès

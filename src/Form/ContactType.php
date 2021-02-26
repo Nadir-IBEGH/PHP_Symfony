@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email;
 
 class ContactType extends AbstractType
 {
@@ -44,7 +45,7 @@ class ContactType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'constraints' => [
-                    new NotBlank(['message' => 'Ce champs ne peut pas être vide !']),
+                    new NotBlank(['message' => 'Ce champs ne peut pas être vide !'])
                 ],
                 'attr' => [
                     'placeholder' => 'Entrer votre adresse emai']

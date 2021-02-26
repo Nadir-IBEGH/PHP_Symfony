@@ -39,32 +39,29 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{category_slug}/{product_slug}",  name="product_show", priority=-1 )
+     * @Route("/admin/product/show/{id}",  name="admin_product_show", priority=-1 )
      * @param $product_slug
      * @param ProductRepository $productRepository
      * @param EventDispatcherInterface $eventDispatcher
      * @return Response
      */
 
-    public function showProduct($product_slug, ProductRepository $productRepository, EventDispatcherInterface $eventDispatcher)
+    public function showProduct($id, ProductRepository $productRepository)
     {
         $product = $productRepository->findOneBy(
-            ['slug' => $product_slug]
+            ['id' => $id]
         );
 
         if (!$product) {
             throw  $this->createNotFoundException("Le produit demandé n'existe pas");
         }
 
-        $purchaseViewEvent = new ProductViewEvent($product);
-        $eventDispatcher->dispatch($purchaseViewEvent,'product.view');
-
-        return $this->render('product/show.html.twig', [
+        return $this->render('admin/product/show.html.twig', [
             'product' => $product]);
     }
 
     /**
-     * @Route("admin/product/{id}/edit")
+     * @Route("admin/product/{id}/edit", name="admin_product_edit")
      * @param $id
      * @param ProductRepository $productRepository
      * @param Request $request
@@ -85,12 +82,12 @@ class ProductController extends AbstractController
                     'product_slug' => $product->getSlug()]);
         }
         $formView = $form->createView();
-        return $this->render('product/edit.html.twig', ['product' => $product, 'formView' => $formView]);
+        return $this->render('admin/product/edit.html.twig', ['product' => $product, 'formView' => $formView]);
     }
 
 
     /**
-     * @Route("/admin/product/create", name="product_create")
+     * @Route("/admin/product/create", name="admin_product_new")
      * @param Request $request
      * @param SluggerInterface $slugger
      * @param EntityManagerInterface $em
@@ -118,6 +115,18 @@ class ProductController extends AbstractController
         }
         $formView = $form->createView();
 
-        return $this->render('product/create.html.twig', ['formView' => $formView]);
+        return $this->render('admin/product/create.html.twig', ['formView' => $formView]);
+    }
+
+    /**
+     * @Route("/admin/product", name="admin_index")
+     * @param ProductRepository $productRepository
+     * @return Response
+     */
+    public function products(ProductRepository $productRepository): Response
+    {
+        $products = $productRepository->findAll();     //d($products);
+       return $this->render('admin/index.html.twig', ['products' => $products]);
     }
 }
+

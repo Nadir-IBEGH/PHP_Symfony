@@ -15,6 +15,7 @@
         <tr>
             <th scope="col">Nom</th>
             <th scope="col">Categorie</th>
+            <th scope="col">Statut</th>
             <th scope="col">Prix</th>
         </tr>
         </thead>
@@ -23,6 +24,13 @@
             <tr>
                 <td>{{ product.name }}</td>
                 <td>{{ product.category.name }}</td>
+                <td>
+                    {% if product.isVisible %}
+                        Visible
+                    {% else %}
+                        Non visible
+                    {% endif %}
+                </td>
                 <td>{{ product.price | amount }}</td>
                 <td class="text-right">
                     <div class="item-actions">

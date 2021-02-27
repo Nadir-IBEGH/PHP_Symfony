@@ -76,10 +76,7 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            return $this->redirectToRoute('product_show',
-                [
-                    'category_slug' => $product->getCategory()->getSlug(),
-                    'product_slug' => $product->getSlug()]);
+            return $this->redirectToRoute('admin_product_show', ['id'=>$product->getId()]);
         }
         $formView = $form->createView();
         return $this->render('admin/product/edit.html.twig', ['product' => $product, 'formView' => $formView]);
@@ -106,11 +103,8 @@ class ProductController extends AbstractController
 
             $em->persist($product);
             $em->flush();
-            return $this->redirectToRoute('product_show',
-                [
-                    'product_slug' => $product->getSlug(),
-                    'category_slug' => $product->getCategory()->getSlug()
-                ]);
+            return $this->redirectToRoute('admin_product_show',
+                ['id'=>$product->getId()]);
             //  dd($product);
         }
         $formView = $form->createView();
@@ -126,7 +120,7 @@ class ProductController extends AbstractController
     public function products(ProductRepository $productRepository): Response
     {
         $products = $productRepository->findAll();     //d($products);
-       return $this->render('admin/index.html.twig', ['products' => $products]);
+        return $this->render('admin/index.html.twig', ['products' => $products]);
     }
 }
 

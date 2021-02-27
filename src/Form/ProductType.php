@@ -8,6 +8,8 @@ use App\Form\DataTransformer\CentimesTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -51,6 +53,23 @@ class ProductType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'name'
             ]);
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            //On récupère l'entité lié au formulaire
+            $product = $event->getData();
+            if ($product !== null) {
+                $form = $event->getForm();
+
+                $form->add('isVisible', ChoiceType::class, [
+                    'label' => 'Visibilité du produit',
+                    'choices' => [
+                        'Oui' => 1,
+                        'Non' => 0
+                    ],
+                    'expanded' => true,
+                    'multiple' => false,
+                    'data' => $product->getIsVisible()]);
+            }
+        });
 
         // Transformer le prix avant l'afficher à l'utilisateur et l'avoir validé par l'utilisateur
 

@@ -2,9 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="829ecd98-24aa-4536-b664-1f3254d733ef" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20210228104256.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20210228104256.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20210228111033.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20210228111033.php" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210213140536.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210215222708.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210215224212.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210227111854.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210227235925.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegisterController.php" afterDir="false" />
+>>>>>>> ddbbb9835c1c384f0d7078c5b0ec2d774297c4b4
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

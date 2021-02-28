@@ -58,6 +58,11 @@ class User implements UserInterface
      */
     private $purchases;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token_activation;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -220,5 +225,17 @@ class User implements UserInterface
             $total+=$purchase->getTotal();
         }
         return $total;
+    }
+
+    public function getTokenActivation(): ?string
+    {
+        return $this->token_activation;
+    }
+
+    public function setTokenActivation(?string $token_activation): self
+    {
+        $this->token_activation = $token_activation;
+
+        return $this;
     }
 }

@@ -34,15 +34,14 @@ class UserRegisterSuccessSubscriber implements EventSubscriberInterface
     {
         /** @var User $registerUser */
         $registerUser = $registerSuccessEvent->getUser();
-
         $email = new TemplatedEmail();
         $email
             ->from(new Address($registerUser->getEmail(), $registerUser->getFullName()))
             ->to($registerUser->getEmail())
-            ->subject("Bravo, votre incriptiobn a bien été confirmée")
-            ->htmlTemplate('emails/register_confirmation.html.twig')
+            ->subject("Votre incriptiobn a bien été enregistré, vous allez recevoir un mail de confirmation !!")
+            ->htmlTemplate('emails/activation.html.twig')
             ->context([
-                'user' => $registerUser
+                'token' => $registerUser->getTokenActivation()
             ]);
 
         $this->mailer->send($email);

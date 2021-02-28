@@ -14,9 +14,11 @@
 
     <div class="row">
         {% for product in category.products %}
+            {% if product.isVisible %}
             <div class="col-3">
              {% include "product/_product_card.html.twig" %}
             </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

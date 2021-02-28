@@ -40,9 +40,7 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/admin/product/show/{id}",  name="admin_product_show", priority=-1 )
-     * @param $product_slug
      * @param ProductRepository $productRepository
-     * @param EventDispatcherInterface $eventDispatcher
      * @return Response
      */
 
@@ -53,7 +51,7 @@ class ProductController extends AbstractController
         );
 
         if (!$product) {
-            throw  $this->createNotFoundException("Le produit demandé n'existe pas");
+            throw  $this->createNotFoundException("Le produit demandé n'existe pas 1");
         }
 
         return $this->render('admin/product/show.html.twig', [

@@ -37,9 +37,7 @@ class RegisterController extends AbstractController
     {
         $userForm = new User();
         $form = $this->createForm(UserType::class, $userForm);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             /** @var User $user */
@@ -52,19 +50,19 @@ class RegisterController extends AbstractController
                     'formView' => $form->createView()
                 ]);
             } else {
-
                 $u = new User();
                 $hash = $encoder->encodePassword($u, $user->getPassword());
                 $u
                     ->setFullName($user->getFullName())
                     ->setPassword($hash)
-                    ->setEmail($user->getEmail());
-
+                    ->setEmail($user->getEmail())
+                    ->setTokenActivation(md5(uniqid()));
                 $manager->persist($u);
                 $manager->flush();
 
+                // envoie de mail
                 $registerSuccessEvent = new RegisterSuccessEvent($u);
-                $eventDispatcher->dispatch($registerSuccessEvent ,'register.success');
+                $eventDispatcher->dispatch($registerSuccessEvent, 'register.success');
 
 
                 $this->addFlash('success', 'Félicitation, vous êtes inscrit chez nous, vous pouvez désormé profiter de nos produits');
@@ -76,5 +74,28 @@ class RegisterController extends AbstractController
         return $this->render('register/index.html.twig', [
             'formView' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/activation/{token}", name="activation")
+     * @param $token
+     * @param UserRepository $userRepository
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function activation($token, UserRepository $userRepository, EntityManagerInterface $em)
+    {
+        $user = $userRepository->findOneBy(['token_activation' => $token]);
+
+        if (!$user) {
+            // Error 404
+            throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
+        }
+        // Delete a token
+        $user->setTokenActivation(null);
+        $em->flush();
+        $this->addFlash('success', "Vous avez bien activé votre compte");
+
+        return $this->redirectToRoute('authentification_login');
     }
 }

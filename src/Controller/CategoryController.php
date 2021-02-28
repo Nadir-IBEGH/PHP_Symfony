@@ -94,7 +94,7 @@ class CategoryController extends AbstractController
         );
 
         if (!$product) {
-            throw  $this->createNotFoundException("Le produit demandé n'existe pas");
+            throw  $this->createNotFoundException("Le produit demandé n'existe pas 2");
         }
 
         $purchaseViewEvent = new ProductViewEvent($product);

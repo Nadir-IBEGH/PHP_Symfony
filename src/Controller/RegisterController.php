@@ -65,7 +65,7 @@ class RegisterController extends AbstractController
                 $eventDispatcher->dispatch($registerSuccessEvent, 'register.success');
 
 
-                $this->addFlash('success', 'Félicitation, vous êtes inscrit chez nous, vous pouvez désormé profiter de nos produits');
+                $this->addFlash('success', 'Félicitation, vous êtes inscrit chez nous, vous allez recevoir un mail confirmation');
                 return $this->redirectToRoute('authentification_login');
             }
         }

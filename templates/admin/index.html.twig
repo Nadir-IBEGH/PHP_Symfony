@@ -19,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for product in products %}
+        {% for product in pagination %}
             <tr>
                 <td>{{ product.name }}</td>
                 <td>{{ product.category.name }}</td>
@@ -45,9 +45,32 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4" align="center"> pas de posts trouvé</td>
+                <td colspan="4" align="center"> Pas de produits trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+    {# <ul class="pagination">
+        {% for item in 1..((totalProduct/limit)|round(0,'ceil')) %}
+            <li class="{{ (page==item) ? 'active' : '' }}">
+                <a href="?page={{ item }}"> {{ item }}</a>
+            </li>
+        {% endfor %}
+    </ul> #}
 {% endblock %}
+
+
+
+
+
+
+
+
+
+

@@ -19,6 +19,36 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+
+    /**
+      * Return all Product per page
+     */
+    public function getPaginatedProductQuery(): \Doctrine\ORM\Query
+    {
+        $query = $this->createQueryBuilder('p');
+        return $query->getQuery();
+    }
+
+
+/*    public function getPaginatedProduct($page, $limit){
+
+        $query = $this->createQueryBuilder('p')
+            ->setFirstResult(($page* $limit)-$limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }*/
+
+    /**
+     * Return number of product
+     */
+    public function getTotalProduct(){
+        $query = $this->createQueryBuilder('p')
+            ->select('COUNT(p)');
+            return (int)$query->getQuery()->getSingleScalarResult();
+    }
+
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

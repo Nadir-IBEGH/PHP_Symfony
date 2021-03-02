@@ -8,6 +8,7 @@ use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,7 +75,7 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            return $this->redirectToRoute('admin_product_show', ['id'=>$product->getId()]);
+            return $this->redirectToRoute('admin_product_show', ['id' => $product->getId()]);
         }
         $formView = $form->createView();
         return $this->render('admin/product/edit.html.twig', ['product' => $product, 'formView' => $formView]);
@@ -102,7 +103,7 @@ class ProductController extends AbstractController
             $em->persist($product);
             $em->flush();
             return $this->redirectToRoute('admin_product_show',
-                ['id'=>$product->getId()]);
+                ['id' => $product->getId()]);
             //  dd($product);
         }
         $formView = $form->createView();
@@ -113,12 +114,31 @@ class ProductController extends AbstractController
     /**
      * @Route("/admin/product", name="admin_index")
      * @param ProductRepository $productRepository
+     * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function products(ProductRepository $productRepository): Response
+    public function products(
+        ProductRepository $productRepository,
+        Request $request,
+        PaginatorInterface $paginator
+    ): Response
     {
-        $products = $productRepository->findAll();     //d($products);
-        return $this->render('admin/index.html.twig', ['products' => $products]);
+        $limit = 10;
+        // $page = (int)$request->get("page", 1); // par défaut c'est 1
+        // $products = $productRepository->getPaginatedProduct($page, $limit);
+        // $products = $productRepository->findAll();
+        // $totalProduct = $productRepository->getTotalProduct();
+        $query = $productRepository->getPaginatedProductQuery();
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            $limit /*limit per page*/
+        );
+
+        return $this->render('admin/index.html.twig', [
+            'pagination' => $pagination
+        ]);
     }
 }
 

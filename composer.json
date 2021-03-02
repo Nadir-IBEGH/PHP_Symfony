@@ -12,6 +12,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
+        "knplabs/knp-paginator-bundle": "^5.4",
         "liorchamla/faker-prices": "^2.0",
         "mbezhanov/faker-provider-collection": "^1.2",
         "sensio/framework-extra-bundle": "^5.6",

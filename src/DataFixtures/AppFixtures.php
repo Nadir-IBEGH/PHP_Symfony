@@ -74,6 +74,7 @@ class AppFixtures extends Fixture
                 $product = new Product;
                 $product->setName($faker->productName)
                     ->setPrice($faker->price(40, 200))
+                    ->setIsVisible(mt_rand(0, 1))
                     ->setSlug(strtolower($this->slogger->slug($product->getName())))
                     ->setCategory($category)
                     ->setShortDescription($faker->paragraph)

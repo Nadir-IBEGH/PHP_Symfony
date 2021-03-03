@@ -104,7 +104,6 @@ class ProductController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('admin_product_show',
                 ['id' => $product->getId()]);
-            //  dd($product);
         }
         $formView = $form->createView();
 
@@ -135,10 +134,13 @@ class ProductController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             $limit /*limit per page*/
         );
+        $numberVisibleProduct = $productRepository->getTotatProductByStatut(Product::STATUS_VISIBLE);
+        $numberNotVisibleProduct = $productRepository->getTotatProductByStatut(Product::STATUS_NOT_VISIBLE);
 
         return $this->render('admin/index.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'NumberProductVisible' => $numberVisibleProduct,
+            'NumberProductNotVisible' => $numberNotVisibleProduct,
         ]);
     }
 }
-

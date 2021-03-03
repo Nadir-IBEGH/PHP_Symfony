@@ -48,8 +48,21 @@ class ProductRepository extends ServiceEntityRepository
             return (int)$query->getQuery()->getSingleScalarResult();
     }
 
+    /**
+     * Return number of product visible
+     * @param $statut
+     */
+    public function getTotatProductByStatut($statut)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->select('COUNT(p)')
+            ->where('p.isVisible  = :statut')
+            ->setParameter('statut', $statut)
+        ;
+        return $query->getQuery()->getSingleScalarResult();
+    }
 
-    // /**
+        // /**
     //  * @return Product[] Returns an array of Product objects
     //  */
     /*

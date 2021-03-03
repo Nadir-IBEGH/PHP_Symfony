@@ -12,6 +12,21 @@
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_index') }}">Produits</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_user') }}">Utilisateurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Statistiques</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Messagerie</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Chat</a>
+            </li>
         </ul>
         <ul class="navbar-nav">
             {% if app.user %}

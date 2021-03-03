@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
  */
 class Product
 {
+    public const STATUS_VISIBLE = true;
+    public const STATUS_NOT_VISIBLE = false;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -70,10 +72,13 @@ class Product
      */
     private $isVisible;
 
+    /**
+     * Product constructor.
+     */
     public function __construct()
     {
         $this->purchaseItems = new ArrayCollection();
-        $this->isVisible = false;
+        $this->isVisible = Product::STATUS_NOT_VISIBLE;
     }
 
 

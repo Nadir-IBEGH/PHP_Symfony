@@ -1,4 +1,3 @@
-
 const stripe = Stripe(stripePublicKey);
 
 console.log(clientSecret);

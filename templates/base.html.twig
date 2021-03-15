@@ -5,26 +5,36 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-
-  {#     <link rel="stylesheet" href="css/menu_gauche.css">
+        {# <link rel="stylesheet" href="css/menu_gauche.css">
         <link rel="stylesheet" href="https://bootswatch.com/4/lumen/bootstrap.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
               integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
-              crossorigin="anonymous"/>#}
+              crossorigin="anonymous"/> #}
     {% endblock %}
 </head>
 <body>
 {% include "shared/_navbar.html.twig" %}
 <div class="container pt-5 pb-5">
     {% for rubrique, messages in app.flashes %}
-        <div class="alert alert-{{ rubrique }}">
-            {% for message in messages %}
-                <div id="message-block" class="block-inline">
-                    <p>{{ message }}</p>
-                </div>
-            {% endfor %}
-        </div>
+        {% for message in messages %}
+            <div class="alert alert-{{ rubrique }} alert-dismissible fade show" role="alert">
+                 {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
     {% endfor %}
+    <div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive"
+         aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <p> message </p>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+
+
     {% block body %}{% endblock %}
 </div>
 {% block javascripts %}

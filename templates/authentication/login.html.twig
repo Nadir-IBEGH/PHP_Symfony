@@ -5,21 +5,29 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-            <h1>Connexion</h1>
-            <hr>
-            {% if error %}
-                <div class="alert alert-danger">
-                    {{ error.message }}
-                </div>
-            {% endif %}
-            {{ form_start(formView) }}
-            {{ form_widget(formView) }}
-            <button type="submit" class="btn btn-success">Connexion</button>
-            ou bien <a href="{{ path('register') }}" class="link">s'inscrire</a>
-            {{ form_end(formView) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4 ">
+                <h1 class="text-info">Connexion</h1>
+                <hr>
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.message }}
+                    </div>
+                {% endif %}
+                {{ form_start(formView) }}
+                {{ form_label(formView.email, 'Username', {'label_attr': {'class': 'mb-1 control-label'}}) }}
+                {{ form_widget(formView.email, {'attr': {'class':'mb-3 form-control'}}) }}
+
+                {{ form_label(formView.password, 'Mot de passe', {'label_attr': {'class': 'mb-1 control-label'}}) }}
+                {{ form_widget(formView.password, {'attr': {'class':'mb-3 form-control'}}) }}
+
+                <button type="submit" class="btn btn-success">Connexion</button>
+                <a href="{{ path('register') }}" type="button" class="btn btn-outline-primary">S'inscrire</a><br>
+                <a href="{{ path('app_forgotten_password') }}">Mot de passe perdu</a>
+
+                {{ form_end(formView) }}
+            </div>
         </div>
     </div>
 {% endblock %}

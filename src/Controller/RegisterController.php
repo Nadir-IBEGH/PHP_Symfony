@@ -94,7 +94,7 @@ class RegisterController extends AbstractController
         // Delete a token
         $user->setTokenActivation(null);
         $em->flush();
-        $this->addFlash('success', "Vous avez bien activé votre compte");
+        $this->addFlash('success', "Félicitation, votre  compte a été activé avec succès");
 
         return $this->redirectToRoute('authentification_login');
     }
